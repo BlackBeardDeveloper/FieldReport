@@ -35,20 +35,55 @@ FieldReports/
 - React Native CLI and TypeScript
 - React Navigation
 - React Native Image Picker
-- React Native SVG and Lucide icons
+- React Native Image Resizer
+- React Native NetInfo
 
-## Getting started
+### Backend
+- Node.js
+- Express.js
+- Database: To be implemented
 
-### Requirements
+## Local Data Storage
 
-- Node.js 22.11 or newer and npm
-- React Native CLI Envirment Setup
-- Android Studio, Android SDK, and a device or emulator for Android development
-- macOS with Xcode for iOS development
+The application uses two types of local storage:
 
-### Install dependencies
+**SQLite Database**
+- Report ID
+- Description
+- Idempotency key
+- Image file paths
+- Upload status
+- Server report ID
 
-From the repository root:
+**Device File System**
+- Compressed image files
+- Images organized by report ID
+
+## Report Upload Workflow
+
+1. The inspector creates a report and attaches images.
+2. Images are compressed to meet the 5 MB size limit.
+3. The report and its image paths are saved locally.
+4. The application attempts to upload the report.
+5. If the internet is unavailable, the report remains pending.
+6. When connectivity returns, the application retries the upload.
+7. The backend checks the idempotency key to prevent duplicate reports.
+8. After successful upload confirmation, the local report status changes to Uploaded.
+
+## Installation and Setup
+
+### Prerequisites
+
+- Node.js and npm
+- JDK 17
+- Android Studio
+- Android SDK
+- Android SDK Platform Tools
+- Physical Android device or Android Emulator
+
+### Frontend Setup
+
+Navigate to the frontend directory:
 
 ```sh
 cd Frontend
