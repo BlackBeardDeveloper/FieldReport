@@ -81,6 +81,10 @@ The application uses two types of local storage:
 - Android SDK Platform Tools
 - Physical Android device or Android Emulator
 
+## Backend
+
+There is no backend service or backend source code in this repository yet. The app does not make real API requests, save reports to a server, or persist reports between app launches. Therefore, there are currently no backend setup or startup commands. The server reports and server connection states shown in the app are simulations.
+
 ### Frontend Setup
 
 Navigate to the frontend directory:
