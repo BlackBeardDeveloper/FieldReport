@@ -42,6 +42,7 @@ FieldReports/
 ### Requirements
 
 - Node.js 22.11 or newer and npm
+- React Native CLI Envirment Setup
 - Android Studio, Android SDK, and a device or emulator for Android development
 - macOS with Xcode for iOS development
 
