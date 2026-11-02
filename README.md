@@ -1,147 +1,96 @@
-# Field Reports – Offline-First Reporting App
+# Field Reports
 
-Field Reports is a React Native mobile application designed to help field inspectors create and submit reports with descriptions and photos, even when an internet connection is unavailable.
+Field Reports is a React Native mobile app prototype for field inspectors to create reports with written observations and photos. The repository currently contains the mobile frontend; a backend service is not yet included.
 
-The application follows an offline-first approach, allowing reports to be stored locally on the device and uploaded to a backend server when an internet connection becomes available.
+## Current features
 
-## Project Structure
+- Create reports with a description and photos from the camera or photo library.
+- View report details, attached images, and report status.
+- Browse local and server report screens.
+- View report status summaries for Pending, Uploading, Uploaded, and Failed reports.
+
+**Prototype status:** Report data and server reports are currently held in in-memory mock data. Reports do not persist across app restarts, and there is no backend integration or automatic upload/synchronization yet. The offline-first workflow is a planned direction, not an implemented feature.
+
+## Repository structure
 
 ```text
 FieldReports/
-│
-├── Frontend/
-│   └── React Native Application
-│
-└── Backend/
-    └── Backend API (Coming Soon)
+├── Frontend/          React Native application
+│   ├── src/
+│   │   ├── components/
+│   │   ├── context/
+│   │   ├── navigation/
+│   │   ├── screens/
+│   │   ├── theme/
+│   │   ├── types/
+│   │   └── utils/
+│   ├── android/       Android native project
+│   ├── ios/           iOS native project
+│   └── __tests__/     Frontend tests
+└── README.md
 ```
 
-## Features
+## Technology
 
-### Report Management
-- Create reports with a description.
-- Attach 1–5 images from the camera or gallery.
-- View report details and attached images.
-- Track report upload status.
-
-### Offline Support
-- Save reports locally when the internet is unavailable.
-- Store report information using SQLite.
-- Store image files in the device's internal storage.
-- Automatically retry pending uploads when connectivity returns.
-
-### Image Handling
-- Compress images before uploading.
-- Ensure each image is no larger than 5 MB.
-- Maintain usable image quality.
-- Store compressed images locally until upload completion.
-
-### Upload Management
-- Track Pending, Uploading, and Uploaded report statuses.
-- Retry interrupted uploads.
-- Use idempotency keys to prevent duplicate reports.
-- Confirm successful uploads through backend responses.
-
-### Server Reports
-- View reports retrieved from the backend.
-- Display server report information separately from locally stored reports.
-
-## Technology Stack
-
-### Frontend
-- React Native CLI
-- TypeScript
+- React Native CLI and TypeScript
 - React Navigation
-- SQLite
 - React Native Image Picker
-- React Native Image Resizer
-- React Native NetInfo
+- React Native SVG and Lucide icons
 
-### Backend
-- Node.js
-- Express.js
-- Database: To be implemented
+## Getting started
 
-## Local Data Storage
+### Requirements
 
-The application uses two types of local storage:
+- Node.js 22.11 or newer and npm
+- Android Studio, Android SDK, and a device or emulator for Android development
+- macOS with Xcode for iOS development
 
-**SQLite Database**
-- Report ID
-- Description
-- Idempotency key
-- Image file paths
-- Upload status
-- Server report ID
+### Install dependencies
 
-**Device File System**
-- Compressed image files
-- Images organized by report ID
+From the repository root:
 
-## Report Upload Workflow
-
-1. The inspector creates a report and attaches images.
-2. Images are compressed to meet the 5 MB size limit.
-3. The report and its image paths are saved locally.
-4. The application attempts to upload the report.
-5. If the internet is unavailable, the report remains pending.
-6. When connectivity returns, the application retries the upload.
-7. The backend checks the idempotency key to prevent duplicate reports.
-8. After successful upload confirmation, the local report status changes to Uploaded.
-
-## Installation and Setup
-
-### Prerequisites
-
-- Node.js and npm
-- JDK 17
-- Android Studio
-- Android SDK
-- Android SDK Platform Tools
-- Physical Android device or Android Emulator
-
-### Frontend Setup
-
-Navigate to the frontend directory:
-
-```bash
+```sh
 cd Frontend
-```
-
-Install dependencies:
-
-```bash
 npm install
 ```
 
-Start the Metro development server:
+### Run the app
 
-```bash
+Start Metro:
+
+```sh
 npm start
 ```
 
-Open another terminal and run the Android application:
+In another terminal, run the app on Android:
 
-```bash
+```sh
 npm run android
 ```
 
-## Project Status
+For iOS, install the CocoaPods dependencies on macOS and launch the app:
 
-**Frontend:** Under development.
+```sh
+cd ios
+bundle install
+bundle exec pod install
+cd ..
+npm run ios
+```
 
-**Backend:** Planned.
+### Run checks
 
-The project is being developed in stages, starting with the mobile user interface, followed by local storage, image processing, backend integration, and reliable offline synchronization.
+From `Frontend/`:
 
-## Future Improvements
+```sh
+npm test -- --runInBand
+npm run lint
+npx tsc --noEmit
+```
 
-- Reliable background uploads.
-- Automatic retry with appropriate backoff.
-- Handling interrupted and partially completed uploads.
-- Backend integration and server-side report management.
-- Improved error handling for unstable network connections.
+## Planned work
 
----
-
-**Field Reports** – A practical offline-first solution for field inspection and report management.
+- Persist reports and photos on the device.
+- Connect to a backend for report submission and retrieval.
+- Add reliable offline upload queuing, retries, and synchronization.
+- Improve automated test coverage and build validation.
